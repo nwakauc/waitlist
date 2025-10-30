@@ -38,7 +38,7 @@ export async function sendWaitlistWelcome(toEmail: string) {
           <div style="padding: 30px 40px; color: #333; line-height: 1.6;">
             <h2 style="color: #0072ff;">Hey ${toEmail},</h2>
             <p>You're officially on the <strong>JustJapa</strong> waitlist — where your journey to new opportunities abroad begins!</p>
-            <p>As part of our early community, you'll be the first to access visa tools, migration guides, verified agents, and funding options that make relocating smarter, faster, and safer.</p>
+            <p>As part of our early community, you'll be the first to access visa tools, migration guides, verified agents, Japa AI and funding options that make relocating smarter, faster, and safer.</p>
             <p>We'll keep you updated as we roll out new features and invite batches from the waitlist.</p>
             <a
               href="https://justjapa.com"
