@@ -50,7 +50,9 @@ export async function POST(request: NextRequest) {
     `;
 
     // Fire-and-forget welcome email (do not block API response)
-    void sendWaitlistWelcome(normalizedEmail,);
+    console.log('BEFORE sending welcome email:', normalizedEmail);
+    void sendWaitlistWelcome(normalizedEmail);
+    console.log('AFTER calling sendWaitlistWelcome:', normalizedEmail);
 
     // Get current count
     const countResult = await sql`
