@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
+import { sendWaitlistWelcome } from '@/lib/email';
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,6 +48,9 @@ export async function POST(request: NextRequest) {
       INSERT INTO waitlist_users (email, referral_source, user_agent)
       VALUES (${normalizedEmail}, ${referralSource || null}, ${userAgent})
     `;
+
+    // Fire-and-forget welcome email (do not block API response)
+    void sendWaitlistWelcome(normalizedEmail, { referralSource });
 
     // Get current count
     const countResult = await sql`

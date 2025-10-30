@@ -34,3 +34,33 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Email notifications (waitlist)
+
+We send a welcome email via Resend when a user joins the waitlist.
+
+### Setup
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Create `.env.local` with:
+
+   ```bash
+   RESEND_API_KEY=your_resend_api_key
+   ```
+
+3. Configure a verified sender/domain in Resend. Update the `from` address in `src/lib/email.ts`.
+
+### Files
+
+- `src/lib/email.ts` – email utility with `sendWaitlistWelcome`
+- `src/emails/WaitlistWelcome.tsx` – HTML template
+- `src/app/api/waitlist/route.ts` – triggers email after DB insert (non-blocking)
+
+### Local development
+
+- If `RESEND_API_KEY` is not set, emails are no-op and will be logged to the console.
