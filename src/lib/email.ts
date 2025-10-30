@@ -1,6 +1,12 @@
 import nodemailer from 'nodemailer';
 
 export async function sendWaitlistWelcome(toEmail: string) {
+  // Validate environment variables
+  if (!process.env.MAIL_USER || !process.env.MAIL_PASSWORD) {
+    console.error('❌ Email credentials not configured. Set MAIL_USER and MAIL_PASSWORD in environment variables.');
+    throw new Error('Email credentials not configured');
+  }
+
   const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
     port: 587,
@@ -8,6 +14,9 @@ export async function sendWaitlistWelcome(toEmail: string) {
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: true,
     },
   });
 
@@ -54,7 +63,9 @@ export async function sendWaitlistWelcome(toEmail: string) {
   `;
 
   try {
-    await transporter.sendMail({
+    console.log(`[email:attempting] Sending to ${toEmail} from ${process.env.MAIL_USER}`);
+
+    const info = await transporter.sendMail({
       from: `JustJapa <${process.env.MAIL_USER}>`, // Use authenticated email
       to: toEmail,
       subject,
@@ -62,9 +73,19 @@ export async function sendWaitlistWelcome(toEmail: string) {
       html,
       // bcc: 'youradmin@justjapa.com', // uncomment this if you want admin copies
     });
-    console.log(`[email:sent] WaitlistWelcome -> ${toEmail}`);
+
+    console.log(`✅ [email:sent] WaitlistWelcome -> ${toEmail}`, { messageId: info.messageId });
+    return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('❌ Failed to send waitlist welcome email:', error);
+    console.error('❌ Failed to send waitlist welcome email:', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      code: (error as any)?.code,
+      command: (error as any)?.command,
+      response: (error as any)?.response,
+      toEmail,
+    });
+    // Don't throw - we don't want to block the user signup if email fails
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
