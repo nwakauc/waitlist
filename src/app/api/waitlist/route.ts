@@ -50,16 +50,16 @@ export async function POST(request: NextRequest) {
       VALUES (${normalizedEmail}, ${referralSource || null}, ${userAgent})
     `;
 
-    // Fire-and-forget welcome email (do not block API response)
-    console.log('BEFORE sending welcome email:', normalizedEmail);
-    void sendWaitlistWelcome(normalizedEmail);
-    console.log('AFTER calling sendWaitlistWelcome:', normalizedEmail);
-
     // Get current count
     const countResult = await sql`
       SELECT COUNT(*) as count FROM waitlist_users
     `;
     const count = parseInt(countResult[0].count);
+
+    // Send welcome email - await it to ensure it completes before function terminates
+    console.log('BEFORE sending welcome email:', normalizedEmail);
+    const emailResult = await sendWaitlistWelcome(normalizedEmail);
+    console.log('AFTER sending welcome email:', normalizedEmail, emailResult);
 
     return NextResponse.json(
       {
