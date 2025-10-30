@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     `;
 
     // Fire-and-forget welcome email (do not block API response)
-    void sendWaitlistWelcome(normalizedEmail, { referralSource });
+    void sendWaitlistWelcome(normalizedEmail,);
 
     // Get current count
     const countResult = await sql`
