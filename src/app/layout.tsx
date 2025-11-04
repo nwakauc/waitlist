@@ -76,10 +76,6 @@ export const metadata: Metadata = {
     images: ['/twitter-image.jpg'],
     creator: '@justjapa',
   },
-  verification: {
-    google: 'your-google-verification-code',
-    bing: 'your-bing-verification-code',
-  },
   alternates: {
     canonical: 'https://justjapa.com',
   },
