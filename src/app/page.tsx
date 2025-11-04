@@ -60,9 +60,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#F0F2F5' }}>
+    <main className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#F0F2F5' }}>
       {/* Background ellipses */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 pointer-events-none z-0" role="presentation">
         <img
           src="/Ellipse 849.png"
           alt=""
@@ -78,57 +78,67 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16">
-        <div className="max-w-3xl w-full text-center space-y-16">
+        <article className="max-w-3xl w-full text-center space-y-16">
           {/* Logo and Brand */}
-          <div className="space-y-6">
+          <header className="space-y-6">
             <img
               src="/logo.png"
-              alt="JUSTJAPA Logo"
+              alt="JUSTJAPA - Nigeria's #1 Migration Platform for Japa"
               className="mx-auto"
             />
-          </div>
+          </header>
 
-          {/* User avatars and count */}
-          <div className="flex items-center justify-center">
+          {/* Social proof section */}
+          <section className="flex items-center justify-center" aria-label="Social proof">
             <div className="flex items-center space-x-2">
               <img
                 src="/users-joined.png"
-                alt="Users joined waitlist"
+                alt="Nigerian users who joined JUSTJAPA migration platform"
                 className="h-8"
               />
               {waitlistCount !== null && (
-                <span className="text-gray-600 text-base font-medium">
-                  {waitlistCount.toLocaleString()}+ users joined waitlist
+                <span className="text-gray-600 text-base font-medium" itemProp="memberCount">
+                  {waitlistCount.toLocaleString()}+ Nigerians planning to japa joined our platform
                 </span>
               )}
             </div>
-          </div>
+          </section>
 
-          {/* Main heading */}
-          <div className="space-y-6">
-            <h2 className="font-sora text-gray-900 max-w-4xl mx-auto" style={{
+          {/* Main value proposition */}
+          <section className="space-y-6">
+            <h1 className="font-sora text-gray-900 max-w-4xl mx-auto" style={{
               fontWeight: 600,
               fontSize: '36px',
               lineHeight: '51px',
               letterSpacing: '-0.5px',
               textAlign: 'center'
             }}>
-              The Smarter Way to <span className="text-blue-600">Japa</span>. Your All in One{' '}
-              <span className="text-blue-600">Migration</span> Platform
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Plan your move, match with verified agents, secure your visa, connect with opportunities in diaspora, and start your new life abroad.
+              How to <span className="text-blue-600">Japa</span> from Nigeria - The Smarter Way to{' '}
+              <span className="text-blue-600">Migrate</span> Abroad
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto" itemProp="description">
+            Join 1000+ Nigerians planning their japa journey. Get matched with verified migration agents, secure your visa, access relocation guides, and connect with opportunities in Canada, UK, USA, and other countries. Start your new life abroad with confidence.
             </p>
-          </div>
 
-          {/* Email form */}
-          <div className="flex justify-center">
-            <form onSubmit={handleSubmit} className="relative" style={{ width: '715px', height: '68px' }}>
+            {/* Additional SEO content */}
+            <div className="text-sm text-gray-500 max-w-2xl mx-auto space-y-2">
+              <p>✅ Visa assistance for study and work abroad</p>
+              <p>✅ Verified migration agents and consultants</p>
+              <p>✅ Step-by-step relocation planning</p>
+              <p>✅ Connect with Nigerian diaspora community</p>
+            </div>
+          </section>
+
+          {/* CTA Section */}
+          <section className="flex justify-center">
+            <form onSubmit={handleSubmit} className="relative" style={{ width: '715px', height: '68px' }} role="form" aria-label="Join JUSTJAPA migration platform waitlist">
+              <label htmlFor="email-input" className="sr-only">Enter your email to join JUSTJAPA migration platform waitlist</label>
               <input
+                id="email-input"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
+                placeholder="Enter your email to start your japa journey"
                 required
                 disabled={isSubmitting}
                 className="w-full h-full pl-6 pr-40 text-base bg-white placeholder-gray-500 outline-none disabled:opacity-50 text-black"
@@ -137,7 +147,11 @@ export default function Home() {
                   borderColor: '#D1D5DB',
                   borderRadius: '93px'
                 }}
+                aria-describedby="email-help"
               />
+              <div id="email-help" className="sr-only">
+                Join 1000+ Nigerians planning their migration abroad with JUSTJAPA
+              </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -146,24 +160,31 @@ export default function Home() {
                   borderRadius: '93px',
                   height: 'calc(100% - 20px)'
                 }}
+                aria-label="Join JUSTJAPA migration platform waitlist"
               >
-                {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                {isSubmitting ? 'Joining...' : 'Start Your Japa Journey'}
               </button>
             </form>
-          </div>
+          </section>
 
           {/* Success/Error message */}
           {message && (
-            <div className={`mt-4 p-4 rounded-lg max-w-lg mx-auto ${
+            <section className={`mt-4 p-4 rounded-lg max-w-lg mx-auto ${
               isSuccess
                 ? 'bg-green-50 text-green-800 border border-green-200'
                 : 'bg-red-50 text-red-800 border border-red-200'
-            }`}>
+            }`} role="alert" aria-live="polite">
               {message}
-            </div>
+            </section>
           )}
-        </div>
+
+          {/* SEO Footer Content */}
+          <footer className="text-xs text-gray-400 max-w-2xl mx-auto space-y-2">
+            <p>JUSTJAPA helps Nigerians migrate abroad through verified agents and comprehensive relocation support.</p>
+            <p>Keywords: japa, how to japa, migration platform, visa assistance, relocate abroad, travel overseas, move to canada, emigration from nigeria</p>
+          </footer>
+        </article>
       </div>
-    </div>
+    </main>
   );
 }
